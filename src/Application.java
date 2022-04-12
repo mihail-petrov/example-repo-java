@@ -15,20 +15,22 @@ public class Application {
             System.out.println("3. Чисто е ");
 
             int objectId = inputScanner.nextInt();
-            boolean isWallDetected  = (objectId == OBJECT_WALL);
-            boolean isChairDetected = (objectId == OBJECT_CHAIR);
-            boolean isClear         = (objectId == NO_OBJECT);
 
-            if(isWallDetected) {
-                System.out.println("Go Sideway");
-            }
+            switch (objectId) {
+                case 1:
+                    System.out.println("Go Sideway");
+                    break;
 
-            if(isChairDetected) {
-                System.out.println("Jump");
-            }
+                case 2:
+                    System.out.println("Jump");
+                    break;
 
-            if(isClear) {
-                System.out.println("Go Forward");
+                case 3:
+                    System.out.println("Go Forward");
+                    break;
+
+                default:
+                    System.out.println("*** Repeat ***");
             }
         }
     }
