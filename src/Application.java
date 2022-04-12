@@ -1,10 +1,18 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Application {
 
-    public static Scanner inputScanner  = new Scanner(System.in);
-    public static boolean isRunning     = true;
+    public static Scanner inputScanner      = new Scanner(System.in);
+    public static Random randomGenerator    = new Random();
+    public static boolean isRunning         = true;
 
+    public static int availableHitCount     = 4;
+
+    /**
+     * @author Mihail Petrov
+     * This process contains algorithum for robot movement
+     */
     public static void processMove() {
 
         final int OBJECT_WALL   = 1;
@@ -36,8 +44,51 @@ public class Application {
         System.out.println("Робота спря да се движи");
     }
 
+    public static boolean isTargetLocked() {
+
+        int randomNumber        = randomGenerator.nextInt(5000);
+        return (randomNumber % 2 == 0);
+    }
+
+    public static boolean isBatteryCharged() {
+        return (availableHitCount != 0);
+    }
+
+    public static boolean isBatteryEmpty() {
+        return !isBatteryCharged();
+    }
+
+    public static boolean isHitSafe() {
+
+        int targetChanceId = (randomGenerator.nextInt(10) + 1);
+        return (targetChanceId != 5);
+    }
+
+    public static boolean isHitProcessable() {
+
+        boolean isTargetLocked      = isTargetLocked();
+        boolean isBatteryCharged    = isBatteryCharged();
+        boolean isHitSafe           = isHitSafe();
+
+        return  isTargetLocked   &&
+                isBatteryCharged &&
+                isHitSafe;
+    }
+
     public static void processFight() {
 
+        if(isBatteryEmpty()) {
+            processCharge();
+        }
+
+        if(isHitProcessable()) {
+            System.out.println("Удара е нанесен успешно");
+            availableHitCount--;
+        }
+    }
+
+    public static void processCharge() {
+        availableHitCount = 4;
     }
 
     public static void processExit() {
@@ -45,6 +96,9 @@ public class Application {
     }
 
     public static void main(String[] args) {
+
+        // Едноредов коментар
+        /* многоредов коментар */
 
         final int PROCESS_MOVE  = 1;
         final int PROCESS_FIGHT = 2;
